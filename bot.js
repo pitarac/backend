@@ -16,7 +16,7 @@ bot.onText(/\/start/, (msg) => {
 
   Para participar do nosso airdrop e ganhar tokens grátis, siga as instruções abaixo:
   1. Acesse nosso airdrop e siga as etapas necessárias.
-  2. Certifique-se de cumprir todas as condições para ser elegível.
+  2. Conecte a sua carteira TON.
 
   Se precisar de ajuda, sinta-se à vontade para nos contatar. Boa sorte!
 
@@ -27,7 +27,7 @@ bot.onText(/\/start/, (msg) => {
     reply_markup: {
       inline_keyboard: [
         [
-          { text: 'Acessar nosso airdrop', url: 'https://t.me/Capivaracoin_bot/airdrop' },
+          
           { text: 'Visitar o nosso site', url: 'https://capivara.online?utm_source=telegram&utm_medium=bot&utm_campaign=site' }
         ]
       ]
