@@ -10,6 +10,8 @@ const bot = new TelegramBot(token, { polling: true });
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name;
+  const username = msg.from.username;  // Captura o username do usuário
+  const userId = msg.from.id;  // Captura o ID do usuário
 
   const welcomeMessage = `
   Olá, ${firstName}! Bem-vindo ao Airdrop da Capivara Coin!
@@ -27,8 +29,8 @@ bot.onText(/\/start/, (msg) => {
     reply_markup: {
       inline_keyboard: [
         [
-          
-          { text: 'Visitar o nosso site', url: 'https://capivara.online?utm_source=telegram&utm_medium=bot&utm_campaign=site' }
+          { text: 'Visitar o nosso site', url: 'https://capivara.online?utm_source=telegram&utm_medium=bot&utm_campaign=site' },
+          { text: 'Jogar Airdrop', url: `https://game.capivara.online/?user_id=${userId}&username=${username}` }
         ]
       ]
     }
