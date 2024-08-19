@@ -30,7 +30,7 @@ bot.onText(/\/start/, (msg) => {
       inline_keyboard: [
         [
           { text: 'Visitar o nosso site', url: 'https://capivara.online?utm_source=telegram&utm_medium=bot&utm_campaign=site' },
-          { text: 'Jogar Airdrop', url: ` https://t.me/Capivaracoin_bot/airdrop` }
+          { text: 'Jogar Airdrop', url: `https://t.me/Capivaracoin_bot/airdrop` }
         ]
       ]
     }
