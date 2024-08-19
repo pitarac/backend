@@ -13,24 +13,27 @@ bot.onText(/\/start/, (msg) => {
   const username = msg.from.username;  // Captura o username do usuário
   const userId = msg.from.id;  // Captura o ID do usuário
 
+  // Você pode enviar esses dados para o backend do seu jogo
+  console.log(`Usuário iniciou o bot: ${username} (ID: ${userId})`);
+
   const welcomeMessage = `
   Olá, ${firstName}! Bem-vindo ao Airdrop da Capivara Coin!
 
-  Para participar do nosso airdrop e ganhar tokens grátis, siga as instruções abaixo:
-  1. Acesse nosso airdrop e siga as etapas necessárias.
-  2. Conecte a sua carteira TON.
-
-  Se precisar de ajuda, sinta-se à vontade para nos contatar. Boa sorte!
-
-  Equipe Capivara Coin 🦫
+  Para participar do nosso airdrop e jogar nosso game, clique nos botões abaixo:
   `;
 
   const options = {
     reply_markup: {
       inline_keyboard: [
         [
-          { text: 'Visitar o nosso site', url: 'https://capivara.online?utm_source=telegram&utm_medium=bot&utm_campaign=site' },
-          { text: 'Jogar Airdrop', url: `https://t.me/Capivaracoin_bot/airdrop?start=play_${userId}_${username}` }
+          { 
+            text: 'Visitar o nosso site', 
+            url: 'https://capivara.online?utm_source=telegram&utm_medium=bot&utm_campaign=site'
+          },
+          { 
+            text: 'Jogar Capivara Coin', 
+            callback_data: `start_game_${userId}_${username}`  // Usando callback_data para manipulação no backend
+          }
         ]
       ]
     }
@@ -39,8 +42,23 @@ bot.onText(/\/start/, (msg) => {
   bot.sendMessage(chatId, welcomeMessage, options);
 });
 
-bot.on('message', (msg) => {
-  console.log(`Mensagem recebida de ${msg.chat.id}: ${msg.text}`);
+bot.on('callback_query', (callbackQuery) => {
+  const msg = callbackQuery.message;
+  const data = callbackQuery.data;
+
+  if (data.startsWith('start_game_')) {
+    const params = data.split('_');
+    const userId = params[2];
+    const username = params[3];
+
+    // Aqui você poderia enviar uma requisição para o backend do seu jogo
+    // incluindo os parâmetros capturados
+    const gameUrl = `https://game.capivara.online/?user_id=${userId}&username=${username}`;
+
+    bot.answerCallbackQuery(callbackQuery.id)
+      .then(() => bot.sendMessage(msg.chat.id, `Iniciando o jogo para ${username}...`))
+      .then(() => bot.sendMessage(msg.chat.id, gameUrl));
+  }
 });
 
 console.log('Bot está rodando...');
